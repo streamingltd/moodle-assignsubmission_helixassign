@@ -44,3 +44,4 @@ $string['view_submission'] = 'View Submission';
 $string['no_permission'] = 'You do not have permission to use Video Assignments';
 $string['mobilesub'] = 'Video submissions cannot currently be made via MoodleMobile. Please use the button to submit via the website.';
 $string['mobilelink'] = 'Submit Video via Website';
+$string['privacy:metadata'] = 'Plugin does not store any personal data.';
