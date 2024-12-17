@@ -359,16 +359,6 @@ class assign_submission_helixassign extends assign_submission_plugin {
     }
 
     /**
-     * Formatting for log info
-     *
-     * @param $submission The new submission
-     * @return string
-     */
-    public function format_for_log($submission = false) {
-        return get_string('helixsubmissionlog', 'assignsubmission_helixassign');
-    }
-
-    /**
      * The assignment has been deleted - cleanup
      *
      * @return bool
