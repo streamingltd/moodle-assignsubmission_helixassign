@@ -24,8 +24,6 @@
 
 namespace assignsubmission_helixassign\event;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * The assignsubmission_helixassign submission_updated event class.
  *
@@ -69,6 +67,6 @@ class submission_updated extends \mod_assign\event\submission_updated {
      */
     public static function get_objectid_mapping() {
         // No mapping available for 'assignsubmission_helixassign'.
-        return array('db' => 'assignsubmission_helixassign', 'restore' => \core\event\base::NOT_MAPPED);
+        return ['db' => 'assignsubmission_helixassign', 'restore' => \core\event\base::NOT_MAPPED];
     }
 }

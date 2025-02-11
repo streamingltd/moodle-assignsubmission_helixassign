@@ -24,8 +24,6 @@
 
 namespace assignsubmission_helixassign\event;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * The assignsubmission_helixassign assessable uploaded event class with legacy log compatibility.
  *

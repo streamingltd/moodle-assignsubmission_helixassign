@@ -17,9 +17,10 @@
 /**
  * This file contains helixmedia mobile code
  *
- * @package    mod
+ * @package    assignsubmission_helixassign
  * @subpackage helixmedia
  * @author     Tim Williams (For Streaming LTD)
+ * @copyright  MEDIAL
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,12 +30,16 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/mod/helixmedia/lib.php');
 require_once($CFG->dirroot.'/mod/helixmedia/locallib.php');
- 
+
 use context_module;
 use assignsubmission_helixassign_external;
 
+
+/**
+ * Mobile handler for MEDIAL submissions
+ **/
 class mobile {
- 
+
     /**
      * Returns the helixmedia course view for the mobile app.
      * @param  array $args Arguments from tool_mobile_get_content WS
@@ -48,19 +53,24 @@ class mobile {
             'templates' => [
                 [
                     'id' => 'main',
-                    'html' => file_get_contents($CFG->dirroot .'/mod/assign/submission/helixassign/mobile/addon-assignsubmission-helixmedia.html')
-                    ]
+                    'html' => file_get_contents($CFG->dirroot .
+                        '/mod/assign/submission/helixassign/mobile/addon-assignsubmission-helixmedia.html'),
+                ],
             ],
-            'javascript' => file_get_contents($CFG->dirroot . '/mod/assign/submission/helixassign/mobile/mobile.js')
+            'javascript' => file_get_contents($CFG->dirroot . '/mod/assign/submission/helixassign/mobile/mobile.js'),
         ];
     }
 
-    private static function random_code($length)
-    {
+    /**
+     * Gets a random code
+     * @param int $length The length required
+     * @return string random code
+     */
+    private static function random_code($length) {
         $chars = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        $clen   = strlen($chars)-1;
+        $clen   = strlen($chars) - 1;
         $id  = '';
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; $i ++) {
             $id .= $chars[mt_rand(0, $clen)];
         }
         return $id;

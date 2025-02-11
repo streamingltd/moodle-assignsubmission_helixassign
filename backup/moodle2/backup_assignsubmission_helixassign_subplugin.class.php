@@ -22,7 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+
 
 /**
  * Provides the information to backup helixassign submissions
@@ -45,14 +45,14 @@ class backup_assignsubmission_helixassign_subplugin extends backup_subplugin {
         // Create XML elements.
         $subplugin = $this->get_subplugin_element(); // Virtual optigroup element.
         $subpluginwrapper = new backup_nested_element($this->get_recommended_name());
-        $subpluginelement = new backup_nested_element('submission_helixassign', null, array('servicesalt', 'preid', 'submission'));
+        $subpluginelement = new backup_nested_element('submission_helixassign', null, ['servicesalt', 'preid', 'submission']);
 
         // Connect XML elements into the tree.
         $subplugin->add_child($subpluginwrapper);
         $subpluginwrapper->add_child($subpluginelement);
 
         // Set source to populate the data.
-        $subpluginelement->set_source_table('assignsubmission_helixassign', array('submission' => backup::VAR_PARENTID));
+        $subpluginelement->set_source_table('assignsubmission_helixassign', ['submission' => backup::VAR_PARENTID]);
 
         $subpluginelement->annotate_files('assignsubmission_helixassign', 'submission_helixassign', 'submission');
         return $subplugin;

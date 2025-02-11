@@ -36,12 +36,13 @@ function xmldb_assignsubmission_helixassign_upgrade($oldversion) {
         $field->set_attributes(XMLDB_TYPE_INTEGER, '10', true, true, false, "0", 'assignment');
         $DB->get_manager()->add_field($table, $field);
 
-        $all = $DB->get_records('assignsubmission_helixassign', array("submission" => 0));
+        $all = $DB->get_records('assignsubmission_helixassign', ["submission" => 0]);
         foreach ($all as $rec) {
             $allsubs = explode(",", $rec->submissions);
             $rec->submission = intval(end($allsubs));
             $DB->update_record('assignsubmission_helixassign', $rec);
         }
+        upgrade_mod_savepoint(true, 2014050601, 'helixmedia');
     }
 
     if ($oldversion < 2014111710) {
@@ -64,6 +65,7 @@ function xmldb_assignsubmission_helixassign_upgrade($oldversion) {
                 }
             }
         }
+        upgrade_mod_savepoint(true, 2014111710, 'helixmedia');
     }
 
     return true;

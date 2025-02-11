@@ -1,4 +1,4 @@
-<?php 
+<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -17,36 +17,36 @@
 /**
  * This file contains helixmedia mobile config
  *
- * @package    mod
+ * @package    assignsubmission_helixassign
  * @subpackage assign/helixassign
  * @author     Tim Williams (For Streaming LTD)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright  MEDIAL
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $addons = [
     'assignsubmission_helixassign' => [
-        'handlers' => [ 
-            'courseassignsubmission_helixmedia' => [ 
+        'handlers' => [
+            'courseassignsubmission_helixmedia' => [
                 'displaydata' => [
                     'title' => 'helixmedia submission',
                     'icon' => $CFG->wwwroot . '/mod/helixmedia/pix/icon.png',
                     'class' => '',
                 ],
- 
-                'delegate' => 'AddonModAssignSubmissionDelegate', 
-                'method' => 'mobile_get_helixmedia', 
+                'delegate' => 'AddonModAssignSubmissionDelegate',
+                'method' => 'mobile_get_helixmedia',
                 'styles' => [
                     'url' => 'mod/assign/submission/helixassign/mobile/styles_app.css',
-                    'version' => '1.02'
-                ]
+                    'version' => '1.02',
+                ],
             ],
         ],
         'lang' => [
             ['pluginname', 'assignsubmission_helixassign'],
             ['mobilesub', 'assignsubmission_helixassign'],
-            ['mobilelink', 'assignsubmission_helixassign']
-        ]
+            ['mobilelink', 'assignsubmission_helixassign'],
+        ],
     ],
 ];

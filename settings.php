@@ -32,7 +32,7 @@ $settings->add(new admin_setting_configcheckbox('assignsubmission_helixassign/de
                    new lang_string('default', 'assignsubmission_helixassign'),
                    new lang_string('default_help', 'assignsubmission_helixassign'), 0));
 
-$hml = $DB->get_record("modules", array("name" => "helixmedia"));
+$hml = $DB->get_record("modules", ["name" => "helixmedia"]);
 
 // The version field has been removed in Moodle 2.6, this compensates.
 if (property_exists($hml, "version")) {

@@ -32,14 +32,15 @@ require_once($CFG->dirroot.'/mod/helixmedia/locallib.php');
 
 /**
  * library class for helixassign submission plugin extending submission plugin base class
- *
  * @package assignsubmission_helixassign
- *
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class assign_submission_helixassign extends assign_submission_plugin {
 
-    // Used for group assignments on the submission summary page so we have a unique frame ID
+    /**
+     * Used for group assignments on the submission summary page so we have a unique frame ID.
+     * @var int
+     */
     private $count = 0;
 
     /**
@@ -61,7 +62,7 @@ class assign_submission_helixassign extends assign_submission_plugin {
         global $DB;
         $aid = $this->assignment->get_instance()->id;
         if ($aid) {
-            $ret = $DB->get_record('assignsubmission_helixassign', array('assignment' => $aid, 'submission' => $submissionid));
+            $ret = $DB->get_record('assignsubmission_helixassign', ['assignment' => $aid, 'submission' => $submissionid]);
             if ($ret) {
                 return $ret;
             }
@@ -84,7 +85,7 @@ class assign_submission_helixassign extends assign_submission_plugin {
             if ($add == "none") {
                 $aid = $this->assignment->get_instance()->id;
                 $plconf = $DB->get_record('assign_plugin_config',
-                    array('assignment' => $aid, 'plugin' => 'helixassign', 'subtype' => 'assignsubmission', 'name' => 'enabled'));
+                    ['assignment' => $aid, 'plugin' => 'helixassign', 'subtype' => 'assignsubmission', 'name' => 'enabled']);
 
                 $disable = '';
                 if (!$plconf->value) {
@@ -115,15 +116,15 @@ class assign_submission_helixassign extends assign_submission_plugin {
     public function get_form_elements($submission, MoodleQuickForm $mform, stdClass $data) {
         global $CFG, $COURSE, $PAGE, $USER;
 
-        $elements = array();
+        $elements = [];
 
         $submissionid = $submission ? $submission->id : 0;
 
         $mform->addElement('hidden', 'helixassign_preid');
         $mform->setType('helixassign_preid', PARAM_INT);
 
-        $thumbparams = array('type' => HML_LAUNCH_STUDENT_SUBMIT_THUMBNAILS);
-        $params = array('type' => HML_LAUNCH_STUDENT_SUBMIT);
+        $thumbparams = ['type' => HML_LAUNCH_STUDENT_SUBMIT_THUMBNAILS];
+        $params = ['type' => HML_LAUNCH_STUDENT_SUBMIT];
 
         if ($submission) {
             $helixassignsubmission = $this->get_helixassign_submission($submission->id);
@@ -137,7 +138,7 @@ class assign_submission_helixassign extends assign_submission_plugin {
 
         if (!array_key_exists('e_assign', $params)) {
             $nassign = optional_param('helixassign_preid', false, PARAM_INT);
-            if ($nassign === FALSE) {
+            if ($nassign === false) {
                 $preid = helixmedia_preallocate_id();
             } else {
                 $preid = $nassign;
@@ -153,7 +154,8 @@ class assign_submission_helixassign extends assign_submission_plugin {
         $disp = new \mod_helixmedia\output\modal($preid, $thumbparams, $params, true);
         $html = $output->render($disp);
 
-        $PAGE->requires->js_call_amd('assignsubmission_helixassign/cancel', 'init', array($preid, $USER->id, helixmedia_get_status_url()));
+        $PAGE->requires->js_call_amd('assignsubmission_helixassign/cancel', 'init',
+            [$preid, $USER->id, helixmedia_get_status_url()]);
         $mform->addElement('static', 'helixassign_choosemedia', "", $html);
 
         return true;
@@ -175,16 +177,16 @@ class assign_submission_helixassign extends assign_submission_plugin {
 
         $helixassignsubmission = $this->get_helixassign_submission($submission->id);
 
-        $params = array(
+        $params = [
             'context' => context_module::instance($this->assignment->get_course_module()->id),
             'courseid' => $this->assignment->get_course()->id,
             'objectid' => $submission->id,
-            'other' => array(
-                'pathnamehashes' => array(),
+            'other' => [
+                'pathnamehashes' => [],
                 'content' => '',
-                'format' => false
-            )
-        );
+                'format' => false,
+            ],
+        ];
         if (!empty($submission->userid) && ($submission->userid != $USER->id)) {
             $params['relateduserid'] = $submission->userid;
         }
@@ -202,7 +204,7 @@ class assign_submission_helixassign extends assign_submission_plugin {
         $groupid = 0;
         // Get the group name as other fields are not transcribed in the logs and this information is important.
         if (empty($submission->userid) && !empty($submission->groupid)) {
-            $groupname = $DB->get_field('groups', 'name', array('id' => $submission->groupid), '*', MUST_EXIST);
+            $groupname = $DB->get_field('groups', 'name', ['id' => $submission->groupid], '*', MUST_EXIST);
             $groupid = $submission->groupid;
         } else {
             $params['relateduserid'] = $submission->userid;
@@ -210,13 +212,13 @@ class assign_submission_helixassign extends assign_submission_plugin {
 
         // Unset the objectid and other field from params for use in submission events.
         unset($params['objectid']);
-        $params['other'] = array(
+        $params['other'] = [
             'submissionid' => $submission->id,
             'submissionattempt' => $submission->attemptnumber,
             'submissionstatus' => $submission->status,
             'groupid' => $groupid,
-            'groupname' => $groupname
-        );
+            'groupname' => $groupname,
+        ];
 
         if ($helixassignsubmission) {
             $params['objectid'] = $helixassignsubmission->id;
@@ -227,7 +229,7 @@ class assign_submission_helixassign extends assign_submission_plugin {
         } else {
             $helixassignsubmission = new stdClass();
             $helixassignsubmission->assignment = $this->assignment->get_instance()->id;
-            $prerec = $DB->get_record('helixmedia_pre', array('id' => $data->helixassign_preid));
+            $prerec = $DB->get_record('helixmedia_pre', ['id' => $data->helixassign_preid]);
             $helixassignsubmission->preid = $prerec->id;
             $helixassignsubmission->submission = $submission->id;
             $helixassignsubmission->servicesalt = $prerec->servicesalt;
@@ -257,7 +259,7 @@ class assign_submission_helixassign extends assign_submission_plugin {
 
         if ($helixassignsubmission) {
             global $PAGE;
-            $params = array('e_assign' =>$helixassignsubmission->preid, 'userid' => $submission->userid);
+            $params = ['e_assign' => $helixassignsubmission->preid, 'userid' => $submission->userid];
 
             if (has_capability('mod/assign:grade', $PAGE->context)) {
                 $params['type'] = HML_LAUNCH_VIEW_SUBMISSIONS;
@@ -273,7 +275,7 @@ class assign_submission_helixassign extends assign_submission_plugin {
             }
 
             $output = $PAGE->get_renderer('mod_helixmedia');
-            $disp = new \mod_helixmedia\output\modal($helixassignsubmission->preid, array(), $params, false,
+            $disp = new \mod_helixmedia\output\modal($helixassignsubmission->preid, [], $params, false,
                 get_string('view_submission', 'assignsubmission_helixassign'), false, false, 'row', $extraid);
             return $output->render($disp);
         }
@@ -297,8 +299,8 @@ class assign_submission_helixassign extends assign_submission_plugin {
 
             global $PAGE;
 
-            $thumbparams = array('e_assign' =>$helixassignsubmission->preid, 'userid' => $submission->userid);
-            $params = array('e_assign' =>$helixassignsubmission->preid, 'userid' => $submission->userid);
+            $thumbparams = ['e_assign' => $helixassignsubmission->preid, 'userid' => $submission->userid];
+            $params = ['e_assign' => $helixassignsubmission->preid, 'userid' => $submission->userid];
 
             if (has_capability('mod/assign:grade', $PAGE->context)) {
                 $thumbparams['type'] = HML_LAUNCH_VIEW_SUBMISSIONS_THUMBNAILS;
@@ -366,7 +368,7 @@ class assign_submission_helixassign extends assign_submission_plugin {
     public function delete_instance() {
         global $DB;
         // Will throw exception on failure.
-        $DB->delete_records('assignsubmission_helixassign', array('assignment' => $this->assignment->get_instance()->id));
+        $DB->delete_records('assignsubmission_helixassign', ['assignment' => $this->assignment->get_instance()->id]);
 
         return true;
     }
@@ -399,9 +401,11 @@ class assign_submission_helixassign extends assign_submission_plugin {
     public function submission_is_empty(stdClass $data) {
         $status = helixmedia_get_media_status($data->helixassign_preid, $data->userid);
 
-        // This will give the date the media was linked to the resource link id for MEDIAL 8.0.008 and better. Earlier versions will just be true or false
+        // This will give the date the media was linked to the resource link id for MEDIAL 8.0.008 and better.
+        // Earlier versions will just be true or false.
         if (is_bool($status)) {
-            // Need to invert the status, the method will return true if there is something present, but we need to return true for empty.
+            // Need to invert the status, the method will return true if there is something present.
+            // But we need to return true for empty.
             return !$status;
         }
 
@@ -424,7 +428,7 @@ class assign_submission_helixassign extends assign_submission_plugin {
 
         $submissionid = $submission ? $submission->id : 0;
         if ($submissionid) {
-            $DB->delete_records('assignsubmission_helixassign', array('submission' => $submissionid));
+            $DB->delete_records('assignsubmission_helixassign', ['submission' => $submissionid]);
         }
         return true;
     }

@@ -38,7 +38,7 @@ class restore_assignsubmission_helixassign_subplugin extends restore_subplugin {
      */
     protected function define_submission_subplugin_structure() {
 
-        $paths = array();
+        $paths = [];
 
         $elename = $this->get_namefor('submission');
         $elepath = $this->get_pathfor('/submission_helixassign'); // We used get_recommended_name() so this works.
