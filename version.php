@@ -24,12 +24,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2024120903;
+$plugin->version   = 2025080501;
 $plugin->requires  = 2022112800;
 $plugin->component = 'assignsubmission_helixassign';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '8.5.19f';
+$plugin->release = '8.5.020k';
 $plugin->dependencies = [
-    'mod_helixmedia' => '2024120903',
+    'mod_helixmedia' => '2025080501'
 ];
-$plugin->supported = [401, 405];
+$plugin->supported = [401, 500];
