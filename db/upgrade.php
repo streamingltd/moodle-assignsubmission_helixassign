@@ -28,9 +28,8 @@
  * @return bool
  */
 function xmldb_assignsubmission_helixassign_upgrade($oldversion) {
-
+    global $DB;
     if ($oldversion < 2014050601) {
-        global $DB;
         $table = new xmldb_table('assignsubmission_helixassign');
         $field = new xmldb_field('submission');
         $field->set_attributes(XMLDB_TYPE_INTEGER, '10', true, true, false, "0", 'assignment');
@@ -46,7 +45,6 @@ function xmldb_assignsubmission_helixassign_upgrade($oldversion) {
     }
 
     if ($oldversion < 2014111710) {
-        global $DB;
         $table = new xmldb_table('assignsubmission_helixassign');
         $all = $DB->get_records('assignsubmission_helixassign');
         foreach ($all as $rec) {
@@ -66,6 +64,21 @@ function xmldb_assignsubmission_helixassign_upgrade($oldversion) {
             }
         }
         upgrade_mod_savepoint(true, 2014111710, 'helixmedia');
+    }
+
+    if ($oldversion < 2025021401) {
+        // Define field custom to be added to assignsubmission_helixassign.
+        $table = new xmldb_table('assignsubmission_helixassign');
+        $field = new xmldb_field('custom', XMLDB_TYPE_TEXT, null, null, null, null, null, 'servicesalt');
+
+        $dbman = $DB->get_manager();
+        // Conditionally launch add field custom.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Helixassign savepoint reached.
+        upgrade_plugin_savepoint(true, 2025021401, 'assignsubmission', 'helixassign');
     }
 
     return true;

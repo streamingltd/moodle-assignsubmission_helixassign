@@ -34,7 +34,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_assignsubmission_helixassign_subplugin extends backup_subplugin {
-
     /**
      *
      * Returns the subplugin information to attach to submission element
@@ -57,5 +56,4 @@ class backup_assignsubmission_helixassign_subplugin extends backup_subplugin {
         $subpluginelement->annotate_files('assignsubmission_helixassign', 'submission_helixassign', 'submission');
         return $subplugin;
     }
-
 }

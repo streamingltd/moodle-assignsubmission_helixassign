@@ -30,7 +30,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class restore_assignsubmission_helixassign_subplugin extends restore_subplugin {
-
     /**
      *
      * Returns array the paths to be handled by the subplugin at assignment level
@@ -65,5 +64,4 @@ class restore_assignsubmission_helixassign_subplugin extends restore_subplugin {
 
         $this->add_related_files('assignsubmission_helixassign', 'submissions_helixassign', 'submission', null, $oldsubmissionid);
     }
-
 }

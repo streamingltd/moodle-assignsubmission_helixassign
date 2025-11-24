@@ -1,4 +1,4 @@
-This is the MEDIAL submission plugin for Moodle 3.x and higher
+This is the MEDIAL submission plugin for Moodle 4.x and higher
 
 Installation
 ------------

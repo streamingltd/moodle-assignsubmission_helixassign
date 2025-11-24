@@ -26,11 +26,14 @@ defined('MOODLE_INTERNAL') || die();
 
 global $DB, $CFG;
 
-require_once($CFG->dirroot."/mod/assign/submission/helixassign/lib.php");
+require_once($CFG->dirroot . "/mod/assign/submission/helixassign/lib.php");
 
-$settings->add(new admin_setting_configcheckbox('assignsubmission_helixassign/default',
-                   new lang_string('default', 'assignsubmission_helixassign'),
-                   new lang_string('default_help', 'assignsubmission_helixassign'), 0));
+$settings->add(new admin_setting_configcheckbox(
+    'assignsubmission_helixassign/default',
+    new lang_string('default', 'assignsubmission_helixassign'),
+    new lang_string('default_help', 'assignsubmission_helixassign'),
+    0
+));
 
 $hml = $DB->get_record("modules", ["name" => "helixmedia"]);
 

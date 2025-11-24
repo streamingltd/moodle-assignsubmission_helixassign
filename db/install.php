@@ -39,5 +39,3 @@ function xmldb_assignsubmission_helixassign_install() {
 
     return true;
 }
-
-

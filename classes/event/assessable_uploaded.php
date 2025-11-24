@@ -39,7 +39,6 @@ namespace assignsubmission_helixassign\event;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class assessable_uploaded extends \core\event\assessable_uploaded {
-
     /**
      * Returns description of what happened.
      *
